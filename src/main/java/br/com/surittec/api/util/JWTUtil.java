@@ -15,9 +15,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JWTUtil  {
 
-    private String secret = "dummy";
+    private String secret = "123456";
 
-    public String extractUsername(String token) {
+    public String login(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -37,9 +37,9 @@ public class JWTUtil  {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String login) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        return createToken(claims, login);
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
@@ -50,7 +50,7 @@ public class JWTUtil  {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername().trim()) && !isTokenExpired(token));
+        final String login = login(token);
+        return (login.equals(userDetails.getUsername().trim()) && !isTokenExpired(token));
     }
 }

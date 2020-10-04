@@ -1,8 +1,13 @@
 package br.com.surittec.api.repository.entity;
 
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -34,11 +39,18 @@ public class User extends AbstractEntity {
 	
 	private String login;
 	private String password;
-	private Set<Authority> authorities;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(
+        name="USER_AUTHORITIES",
+        joinColumns=@JoinColumn(name="user_id")
+    )
+	private List<UserAuthorities> authorities = Collections.emptyList();
+	
 	
 	public User() {}
 
-	public User(String login, String password, Set<Authority> authorities) {
+	public User(String login, String password, List<UserAuthorities> authorities) {
 		super();
 		this.login = login;
 		this.password = password;
@@ -62,11 +74,11 @@ public class User extends AbstractEntity {
 		this.password = password;
 	}
 
-	public Set<Authority> getAuthorities() {
+	public List<UserAuthorities> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(Set<Authority> authorities) {
+	public void setAuthorities(List<UserAuthorities> authorities) {
 		this.authorities = authorities;
 	}
 

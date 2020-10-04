@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
 	}
 	
 	@Override
-	public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repository.findByLogin(username);
 		List<GrantedAuthority> authorities =
 		user
@@ -31,11 +32,10 @@ public class CustomUserDetailService implements UserDetailsService {
 				private static final long serialVersionUID = 1L;
 				@Override
 				public String getAuthority() {
-					return authority.getAuthority();
+					return authority.getAuthority().getAuthority();
 				}
 			})
 			.collect(Collectors.toList());
-		
-		return new CustomUserDetails(user.getLogin(), user.getPassword(), authorities); 
+		return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), authorities); 
 	}
 }

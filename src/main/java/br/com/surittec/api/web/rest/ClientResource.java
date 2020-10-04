@@ -3,6 +3,8 @@ package br.com.surittec.api.web.rest;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,8 @@ public class ClientResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Client> add(@RequestBody @Validated Client client) {
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<Client> add(Authentication authentication, @RequestBody @Validated Client client) {
 		return ResponseEntity.ok(service.create(client));
 	}
 	
