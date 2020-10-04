@@ -23,6 +23,7 @@ public class Phone extends AbstractEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
+	
 	private Client client;
 	
 	@NotEmpty

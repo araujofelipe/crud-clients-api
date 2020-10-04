@@ -1,7 +1,6 @@
 package br.com.surittec.api.repository.entity;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
@@ -26,7 +26,7 @@ public class Client extends AbstractEntity {
 	
 	@Length(min = 3, max = 100) 
 	@NotNull
-	//@Pattern(regexp = "^[A-Za-z0-9]*$")
+	@Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
 	@Column(name = "name")
 	private String name;
 	
@@ -37,7 +37,8 @@ public class Client extends AbstractEntity {
 	private String cpf;
 	
 	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-	private Address address;
+	@JsonIgnoreProperties({"client"})
+	private Address address = new Address();
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"client"})
@@ -116,6 +117,21 @@ public class Client extends AbstractEntity {
 		this.address = client.getAddress();
 		this.phones = client.getPhones();
 		this.emails = client.getEmails();
+	}
+
+
+	public void associatePhones() {
+		this.phones.stream().forEach(phone -> phone.setClient(this));		
+	}
+
+
+	public void associateEmails() {
+		this.emails.stream().forEach(email -> email.setClient(this));
+	}
+
+
+	public void associateAddress() {
+		this.address.setClient(this);		
 	}
 	
 	

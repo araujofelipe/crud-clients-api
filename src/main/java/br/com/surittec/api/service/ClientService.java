@@ -21,6 +21,9 @@ public class ClientService {
 	}
 
 	public Client create(Client client) {
+		client.associatePhones();
+		client.associateEmails();
+		client.associateAddress();
 		return repository.save(client);
 	}
 
