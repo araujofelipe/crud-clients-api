@@ -24,28 +24,31 @@ public class Client extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Length(min = 3, max = 100) 
-	@NotNull
+	@Length(min = 3, max = 100, message = "O nome do cliente deve conter no mínimo 3 e no máximo 100 caracteres.") 
+	@NotNull(message = "O nome é obrigatório")
 	@Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
 	@Column(name = "name")
 	private String name;
 	
-	@NotNull
+	@NotNull(message = "O CPF é obrigatório")
 	@NotEmpty
-	@CPF
+	@CPF(message = "CPF inválido")
 	@Column(name = "cpf")
 	private String cpf;
 	
 	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"client"})
+	@NotNull(message = "O endereço é obrigatório" )
 	private Address address = new Address();
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"client"})
+	@NotEmpty(message = "Ao menos um telefone deve ser informado.")
 	private Set<Phone> phones = Collections.emptySet();;
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"client"})
+	@NotEmpty(message = "Ao menos um e-mail deve ser informado")
 	private Set<Email> emails = Collections.emptySet();
 
 	

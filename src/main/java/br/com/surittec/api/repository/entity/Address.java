@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,18 +23,26 @@ public class Address extends AbstractEntity {
 	private Client client;
 	
 	@JsonAlias({"cep"})
+	@NotEmpty
+	@NotNull
 	private String zipCode;
 	
 	@JsonAlias({"logradouro"})
+	@NotEmpty
+	@NotNull
 	private String publicPlace;
 	
 	@JsonAlias({"complement"})
 	private String complement;
 	
 	@JsonAlias({"bairro"})
+	@NotEmpty
+	@NotNull
 	private String neighborhood;
 	
 	@JsonAlias({"uf"})
+	@NotEmpty
+	@NotNull
 	private String state;
 
 	public Address() {}

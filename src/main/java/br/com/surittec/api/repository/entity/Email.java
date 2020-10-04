@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "email")
@@ -17,6 +19,9 @@ public class Email extends AbstractEntity {
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
+	@NotEmpty
+	@NotNull
+	@javax.validation.constraints.Email
 	private String account;
 	
 	
