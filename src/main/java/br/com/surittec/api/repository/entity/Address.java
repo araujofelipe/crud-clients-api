@@ -1,6 +1,8 @@
 package br.com.surittec.api.repository.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,6 +17,36 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Address extends AbstractEntity {
 	
+	public enum State {
+		AC,
+		AL,
+		AM,
+		AP,
+		BA,
+		CE,
+		DF,
+		ES,
+		GO,
+		MA,
+		MG,
+		MS,
+		MT,
+		PA,
+		PB,
+		PE,
+		PI,
+		PR,
+		RJ,
+		RN,
+		RO,
+		RR,
+		RS,
+		SC,
+		SE,
+		SP,
+		TO,
+	}
+	
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -23,32 +55,33 @@ public class Address extends AbstractEntity {
 	private Client client;
 	
 	@JsonAlias({"cep"})
-	@NotEmpty
-	@NotNull
+	@NotEmpty(message= "O CEP é obrigatório")
+	@NotNull(message= "O CEP é obrigatório")
 	private String zipCode;
 	
 	@JsonAlias({"logradouro"})
-	@NotEmpty
-	@NotNull
+	@NotEmpty(message = "O logradouro é obrigatório")
+	@NotNull(message = "O logradouro é obrigatório")
 	private String publicPlace;
 	
 	@JsonAlias({"complement"})
 	private String complement;
 	
 	@JsonAlias({"bairro"})
-	@NotEmpty
-	@NotNull
+	@NotEmpty(message = "O bairro é obrigatório")
+	@NotNull(message = "O bairro é obrigatório")
 	private String neighborhood;
 	
 	@JsonAlias({"uf"})
-	@NotEmpty
-	@NotNull
-	private String state;
+	@NotEmpty(message = "A UF é obrigatória")
+	@NotNull(message = "A UF é obrigatória")
+	@Enumerated(EnumType.STRING)
+	private State state;
 
 	public Address() {}
 
 	public Address(Client client, String zipCode, String publicPlace, String complement, String neighborhood,
-			String state) {
+			State state) {
 		super();
 		this.client = client;
 		this.zipCode = zipCode;
@@ -98,13 +131,12 @@ public class Address extends AbstractEntity {
 		this.neighborhood = neighborhood;
 	}
 
-	public String getState() {
+	public State getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(State state) {
 		this.state = state;
 	}
-	
 	
 }

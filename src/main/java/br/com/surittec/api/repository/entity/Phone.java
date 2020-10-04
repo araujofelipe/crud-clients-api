@@ -25,12 +25,12 @@ public class Phone extends AbstractEntity {
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	@NotEmpty
-	@NotNull
+	@NotEmpty(message = "O número de telefone é obrigatório")
+	@NotNull(message = "O número de telefone é obrigatório")
 	private String number;
 
-	@NotEmpty
-	@NotNull
+	@NotEmpty(message = "O tipo do telefone é obrigatório")
+	@NotNull(message = "O tipo do telefone é obrigatório")
 	private PhoneType type;
 	
 	
