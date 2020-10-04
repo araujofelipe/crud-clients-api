@@ -29,7 +29,6 @@ public class Phone extends AbstractEntity {
 	@NotNull(message = "O número de telefone é obrigatório")
 	private String number;
 
-	@NotEmpty(message = "O tipo do telefone é obrigatório")
 	@NotNull(message = "O tipo do telefone é obrigatório")
 	private PhoneType type;
 	

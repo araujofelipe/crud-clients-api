@@ -73,7 +73,6 @@ public class Address extends AbstractEntity {
 	private String neighborhood;
 	
 	@JsonAlias({"uf"})
-	@NotEmpty(message = "A UF é obrigatória")
 	@NotNull(message = "A UF é obrigatória")
 	@Enumerated(EnumType.STRING)
 	private State state;

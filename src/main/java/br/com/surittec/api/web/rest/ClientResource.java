@@ -2,12 +2,11 @@ package br.com.surittec.api.web.rest;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,12 +36,17 @@ public class ClientResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Client> update(@PathParam("id") Long id, @RequestBody Client client) {
+	public ResponseEntity<Client> update(@PathVariable("id") Long id, @RequestBody Client client) {
 		return ResponseEntity.ok(service.update(id, client));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Long> delete(@PathParam("id") Long id) {
+	public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(service.delete(id));
+	}
+	
+	@GetMapping("/{id}/detail")
+	public ResponseEntity<Client> detail(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(service.getBy(id));
 	}
 }

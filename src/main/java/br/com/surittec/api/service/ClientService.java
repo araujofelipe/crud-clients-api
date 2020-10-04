@@ -2,6 +2,8 @@ package br.com.surittec.api.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import br.com.surittec.api.repository.ClientRepository;
@@ -28,15 +30,27 @@ public class ClientService {
 	}
 
 	public Client update(Long id, Client client) {
-		Client client_ = repository.getOne(id);
+		Client client_ = getOne(id);
 		client_.merge(client);
 		return repository.save(client_);
 	}
 
 	public Long delete(Long id) {
-		Client client_ =  repository.getOne(id);
+		Client client_ = getOne(id);
 		client_.setActive(false);
 		repository.save(client_);
 		return id;
+	}
+
+	public Client getBy(Long id) {
+		return getOne(id);
+	}
+	
+	private Client getOne(Long id) {
+		try {
+			return repository.getOne(id);
+		} catch (EntityNotFoundException e) {
+			throw(e);
+		}
 	}
 }
