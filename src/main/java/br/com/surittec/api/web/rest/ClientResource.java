@@ -35,7 +35,7 @@ public class ClientResource {
 	@PostMapping
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<Client> add(Authentication authentication, @RequestBody @Validated Client client) {
-		return ResponseEntity.ok(service.create(client));
+		return ResponseEntity.ok(service.create(client, authentication));
 	}
 	
 	@PutMapping("/{id}")

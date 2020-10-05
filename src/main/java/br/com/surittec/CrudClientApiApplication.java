@@ -38,7 +38,7 @@ public class CrudClientApiApplication {
 				registry.addMapping("/api/**")
 		        .allowedOrigins("*")
 		        .allowedHeaders("*")
-		        .allowedMethods("*")
+		        .allowedMethods("POST", "GET", "OPTIONS", "DELETE", "PUT")
 		        .exposedHeaders(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, HttpHeaders.AUTHORIZATION)
 		        .allowCredentials(true);
 		    }

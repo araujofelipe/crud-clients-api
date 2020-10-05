@@ -62,6 +62,12 @@ public class JWTFilter extends OncePerRequestFilter {
         }
 		
 		response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+		response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
+		 if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+	            response.setStatus(HttpStatus.ACCEPTED.value());
+	            return;
+		 }
+
 		filterChain.doFilter(request, response);
 	}
 }
